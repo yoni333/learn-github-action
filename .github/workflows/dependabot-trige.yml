@@ -12,8 +12,6 @@ jobs:
       - name: Create Dependabot issue
         uses: octokit/request-action@v2.x
         with:
-          route: POST /repos/${{ github.repository_owner }}/${{ github.repository }}/issues
-          title: Trigger Dependabot
-          body: "@dependabot check updates"
+          route: POST /repos/${{ github.repository }}/issues?title=Trigger%20Dependabot&body=@dependabot%20check%20updates
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
