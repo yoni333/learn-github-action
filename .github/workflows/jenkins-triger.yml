@@ -12,11 +12,6 @@ jobs:
     steps:
       - name: Trigger Jenkins build
         run: |
-          curl -X POST "YOUR_JENKINS_URL/job/YOUR_JOB_NAME/build?token=TOKEN"
-        env:
-          TOKEN: ${{ secrets.JENKINS_TOKEN }}
-      - name: Trigger mock api
-        run: |
             curl -X GET "https://5f1455762710570016b37ea7.mockapi.io/users"
         env:
           TOKEN: ${{ secrets.JENKINS_TOKEN }}
