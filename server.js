@@ -2,7 +2,7 @@ console.log("run test here!!!!!!****")
 // const axios = require("axios");
 const axios = require('axios');
 async function testHTTP (){
-res = await axios.get("https://5f1455762710570016b37ea7.mockapi.io/users",{timeout: 3000}).then(function (response) {
+const res = await axios.get("https://5f1455762710570016b37ea7.mockapi.io/users",{timeout: 3000}).then(function (response) {
     // handle success
     console.log('success');
     console.log(response);
