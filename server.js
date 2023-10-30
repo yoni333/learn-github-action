@@ -1,7 +1,8 @@
 console.log("run test here!!!!!!****")
 // const axios = require("axios");
-const axios = require('axios/dist/node/axios.cjs');
-axios.get("https://5f1455762710570016b37ea7.mockapi.io/users").then(function (response) {
+const axios = require('axios');
+async function testHTTP (){
+res = await axios.get("https://5f1455762710570016b37ea7.mockapi.io/users",{timeout: 3000}).then(function (response) {
     // handle success
     console.log('success');
     console.log(response);
@@ -14,3 +15,9 @@ axios.get("https://5f1455762710570016b37ea7.mockapi.io/users").then(function (re
     .finally(function () {
         // always executed
     });
+
+    console.log('res',res);
+
+}
+
+testHTTP();
