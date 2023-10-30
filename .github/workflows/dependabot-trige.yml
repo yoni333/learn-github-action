@@ -14,4 +14,4 @@ jobs:
         with:
           route: POST /repos/${{ github.repository }}/issues?title=Trigger%20Dependabot&body=@dependabot%20check%20updates
         env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GITHUB_TOKEN: ${{ secrets.DEPENDABO_PAT }}
