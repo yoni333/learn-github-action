@@ -1,0 +1,21 @@
+name: Trigger Dependabot on push
+
+on:
+  push:
+    branches:
+      - main  # or your default branch
+
+jobs:
+  create_issue:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Create Dependabot issue
+        uses: octokit/request-action@v2.x
+        with:
+          route: POST /repos/{owner}/{repo}/issues
+          owner: ${{ github.repository_owner }}
+          repo: ${{ github.repository }}
+          title: Trigger Dependabot
+          body: "@dependabot check updates"
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
