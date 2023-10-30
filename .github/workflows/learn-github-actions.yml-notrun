@@ -9,5 +9,7 @@ jobs:
       - uses: actions/setup-node@v3
         with:
           node-version: '14'
+      - run: |
+        echo The PR was merged
       - run: npm install -g bats
       - run: bats -v
