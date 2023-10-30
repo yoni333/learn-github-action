@@ -1,3 +1,4 @@
+name: Trigger afeTER MERGE pr
 on:
     pull_request:
       types:
