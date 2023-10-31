@@ -27,8 +27,9 @@ jobs:
     - run: npm i @yaakovhatam/take-npm-packages
     - run: npm i 
     - run: npx @yaakovhatam/take-npm-packages --subdeps
-    - run: npm run build --if-present
+    - name: Build angular
       working-directory: ./
+      run: npm run build --if-present
     - run: npm test --if-present
     - name: Archive production artifact   s
       uses: actions/upload-artifact@v3
