@@ -23,10 +23,12 @@ jobs:
         node-version: 18.10.0
         cache: 'npm'
     
+      
     - run: npm i @yaakovhatam/take-npm-packages
     - run: npm i 
     - run: npx @yaakovhatam/take-npm-packages --subdeps
     - run: npm run build --if-present
+      working-directory: ./
     - run: npm test --if-present
     - name: Archive production artifacts
       uses: actions/upload-artifact@v3
