@@ -22,7 +22,7 @@ jobs:
       with:
         node-version: 18.10.0
         cache: 'npm'
-    - run: npm i -g @angular/cli
+    
     - run: npm i @yaakovhatam/take-npm-packages
     - run: npm i 
     - run: npx @yaakovhatam/take-npm-packages --subdeps
