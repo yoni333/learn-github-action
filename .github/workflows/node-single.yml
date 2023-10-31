@@ -30,7 +30,7 @@ jobs:
     - run: npm run build --if-present
       working-directory: ./
     - run: npm test --if-present
-    - name: Archive production artifacts
+    - name: Archive production artifact   s
       uses: actions/upload-artifact@v3
       with:
           name: artifact node_modules
