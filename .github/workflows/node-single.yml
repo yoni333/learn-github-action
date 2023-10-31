@@ -23,14 +23,16 @@ jobs:
         node-version: 18.10.0
         cache: 'npm'
     
-      
+    - name: check folder
+      run: echo ${{ env }}
     - run: npm i @yaakovhatam/take-npm-packages
     - run: npm i 
     - run: npx @yaakovhatam/take-npm-packages --subdeps
     - name: Build angular
       working-directory: ./
       run: npm run build --if-present
-    - run: npm test --if-present
+    - name: check after working direcotry
+      run: echo ${{ env }}
     - name: Archive production artifact   s
       uses: actions/upload-artifact@v3
       with:

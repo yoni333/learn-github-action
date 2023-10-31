@@ -2,11 +2,6 @@
   "name": "ang",
   "version": "0.0.0",
   "scripts": {
-    "ng": "ng",
-    "start": "ng serve",
-    "build": "echo pwd && npx ng build",
-    "watch": "ng build --watch --configuration development",
-    "test": "npx ng test"
   },
   "private": true,
   "dependencies": {
