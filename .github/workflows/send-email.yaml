@@ -34,14 +34,14 @@ jobs:
             {
                 "to": [
                 {
-                    "email":" $RECIVER"
+                    "email":"$RECIVER"
                 }
                 ],
                 "subject": " githhub action -  your job artifact  is ready"
             }
             ],
             "from": {
-            "email": "$SENDER_EMAIL"
+            "email": "$SENDER"
             },
             "content": [
             {
