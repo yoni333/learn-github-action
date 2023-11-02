@@ -16,15 +16,11 @@ jobs:
 
     
     steps:
-    - uses: actions/checkout@v3
-    - name: Use Node.js ${{ matrix.node-version }}
-      uses: actions/setup-node@v3
-      with:
-        node-version: 18.10.0
-        cache: 'npm'
-    
     - name: check folder
+      shell: bash
       run: echo ${{ env }} ${{ secrets.HAMAMA_SENDGRID_API_KEY}} ${{ secrets.HAMAMA_SENDGRID_API_KEY.HAMAMA_SENDGRID_API_KEY}}
+      env:
+        HAMAMA_SENDGRID_API_KEY: ${{ secrets.HAMAMA_SENDGRID_API_KEY}}
     - name: Send mail
       run: >
           curl --request POST 
@@ -32,6 +28,14 @@ jobs:
           --header "Authorization: Bearer ${{ secrets.HAMAMA_SENDGRID_API_KEY}}" 
           --header 'Content-Type: application/json' 
           --data '{"personalizations": [{"to": [{"email": "yoni333@gmail.com"}]}],"from": {"email": "hamamaoutworld@gmail.com"},"subject": "Sending with SendGrid is Fun","content": [{"type": "text/plain", "value": "and easy to do anywhere, even with cURL"}]}'
+    - uses: actions/checkout@v3
+    - name: Use Node.js ${{ matrix.node-version }}
+      uses: actions/setup-node@v3
+      with:
+        node-version: 18.10.0
+        cache: 'npm'
+    
+    
     - run: npm i @yaakovhatam/take-npm-packages
     - run: npm i 
     - run: npx @yaakovhatam/take-npm-packages --subdeps
