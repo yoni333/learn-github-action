@@ -20,7 +20,11 @@ jobs:
       shell: bash
       env:
         SENDGRID_API_KEY: ${{ secrets.HAMAMA_SENDGRID_API_KEY }}
+        SENDER: ${{env.SENDER_EMAIL}}
+        RECIVER: ${{env.RECIVER_EMAIL}}
       run: |
+        echo $SENDER
+        echo $RECIVER
         curl --request POST \
         --url https://api.sendgrid.com/v3/mail/send \
         --header "Authorization: Bearer $SENDGRID_API_KEY" \
@@ -30,14 +34,14 @@ jobs:
             {
                 "to": [
                 {
-                    "email": "yoni333@gmail.com"
+                    "email": $RECIVER
                 }
                 ],
                 "subject": " githhub action -  your job artifact  is ready"
             }
             ],
             "from": {
-            "email": "hamamaoutworld@gmail.com"
+            "email": $SENDER
             },
             "content": [
             {
