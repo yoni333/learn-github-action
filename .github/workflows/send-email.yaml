@@ -22,9 +22,6 @@ jobs:
              echo ${{ env.SENDER_EMAIL }} 
              echo ${{ secrets.HAMAMA_SENDGRID_API_KEY}}
              echo $HAMAMA_SENDGRID_API_KEY
-           
-            
-             
              echo ${{ github.repository }}
            
            
@@ -40,5 +37,5 @@ jobs:
             --url https://api.sendgrid.com/v3/mail/send 
             --header "Authorization: Bearer ${{ secrets.HAMAMA_SENDGRID_API_KEY }}"  
             --header 'Content-Type: application/json' 
-            --data '{"personalizations": [{"to": [{"email": "${{env.HAMAMA_SENDGRID_API_KEY.SENDER_EMAIL}}"}]}],"from": {"email": "hamamaoutworld@gmail.com"},"subject": "Sending with SendGrid is Fun","content": [{"type": "text/plain", "value": "and easy to do anywhere, even with cURL"}]}'
+            --data '{"personalizations": [{"to": [{"email": "hamamaoutworld@gmail.com"}]}],"from": {"email": "hamamaoutworld@gmail.com"},"subject": "Sending with SendGrid is Fun","content": [{"type": "text/plain", "value": "and easy to do anywhere, even with cURL"}]}'
     
