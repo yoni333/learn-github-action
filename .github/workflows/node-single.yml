@@ -31,22 +31,19 @@ jobs:
       working-directory: ./
       run: npm run build --if-present
     
-  make-artifact:
-    needs:  build
-    runs-on: ubuntu-latest
-    steps:
-      - name: run yaakov script downloader
-        run: npx @yaakovhatam/take-npm-packages -d -i 
-      - name: Zip the folder
-        run: zip -r tar-npm-packages.zip npm-packages/
-      - name: Archive production artifact 
-        uses: actions/upload-artifact@v3
-        with:
-            name: artifact tar-npm-packages
-            path: |
-              tar-npm-packages.zip
+ 
+    - name: Run yaakov script downloader
+      run: npx @yaakovhatam/take-npm-packages -d -i 
+    - name: Zip the folder
+      run: zip -r tar-npm-packages.zip npm-packages/
+    - name: Archive production artifact 
+      uses: actions/upload-artifact@v3
+      with:
+          name: artifact tar-npm-packages
+          path: |
+            tar-npm-packages.zip
   send-emal:
-    needs: make-artifact
+    needs: build
     runs-on: ubuntu-latest
             
     environment: HAMAMA_SENDGRID_API_KEY
