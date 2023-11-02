@@ -19,7 +19,7 @@ jobs:
     - name: check folder
       shell: bash
       run: >
-             echo ${{ env.HAMAMA_SENDGRID_API_KEY }} ${{ secrets.HAMAMA_SENDGRID_API_KEY}} ${{ secrets.HAMAMA_SENDGRID_API_KEY.HAMAMA_SENDGRID_API_KEY}}
+             echo ${{ env.HAMAMA_SENDGRID_API_KEY.HAMAMA_SENDGRID_API_KEY }} 
          
       env:
         HAMAMA_SENDGRID_API_KEY: ${{ secrets.HAMAMA_SENDGRID_API_KEY}}
