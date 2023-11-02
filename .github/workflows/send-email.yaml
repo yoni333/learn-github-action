@@ -16,22 +16,8 @@ jobs:
 
     environment: HAMAMA_SENDGRID_API_KEY
     steps:
-    - name: check folder
-      shell: bash
-      run: |
-             echo ${{ env.SENDER_EMAIL }} 
-             echo ${{ secrets.HAMAMA_SENDGRID_API_KEY}}
-             echo $HAMAMA_SENDGRID_API_KEY
-             echo ${{ github.repository }}
-           
-           
-
-         
-      env:
-        HAMAMA_SENDGRID_API_KEY: ${{ secrets.HAMAMA_SENDGRID_API_KEY}}
-       
-    
     - name: Send mail 2
+      shell: bash
       env:
         SENDGRID_API_KEY: ${{ secrets.HAMAMA_SENDGRID_API_KEY }}
       run: |
@@ -47,7 +33,7 @@ jobs:
                     "email": "yoni333@gmail.com"
                 }
                 ],
-                "subject": "Hello, World!"
+                "subject": " githhub action -  your job artifact  is ready"
             }
             ],
             "from": {
@@ -56,7 +42,7 @@ jobs:
             "content": [
             {
                 "type": "text/plain",
-                "value": "Hello, World!"
+                "value": "Hello, from githhub action -  your job artifact  is ready"
             }
             ]
         }'
