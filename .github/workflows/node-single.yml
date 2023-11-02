@@ -32,10 +32,12 @@ jobs:
       working-directory: ./
       run: npm run build --if-present
     - name: check after working direcotry
-      run: echo ${{ env }}
-    - name: Archive production artifact   s
+      run:  pwd
+    - name: Zip the folder
+      run: zip -r my-node-modules.zip node_modules/
+    - name: Archive production artifact 
       uses: actions/upload-artifact@v3
       with:
           name: artifact node_modules
           path: |
-            node_modules
+            my-node-modules.zip
