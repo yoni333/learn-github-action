@@ -38,7 +38,7 @@ jobs:
       run: >
           curl --request POST 
           --url https://api.sendgrid.com/v3/mail/send 
-          --header "Authorization: Bearer " ${{ secrets.HAMAMA_SENDGRID_API_KEY.HAMAMA_SENDGRID_API_KEY }} 
+          --header "Authorization: Bearer  ${{ secrets.HAMAMA_SENDGRID_API_KEY.HAMAMA_SENDGRID_API_KEY }}"
           --header 'Content-Type: application/json' 
           --data '{"personalizations": [{"to": [{"email":  "${{env.MY_NAME.MY_NAME}}"}]}],"from": {"email": "hamamaoutworld@gmail.com"},"subject": "Sending with SendGrid is Fun","content": [{"type": "text/plain", "value": "and easy to do anywhere, even with cURL"}]}'
       env:
@@ -47,7 +47,7 @@ jobs:
       run: >
             curl --request POST 
             --url https://api.sendgrid.com/v3/mail/send 
-            --header "Authorization: Bearer "  ${{ secrets.HAMAMA_SENDGRID_API_KEY }} 
+            --header "Authorization: Bearer ${{ secrets.HAMAMA_SENDGRID_API_KEY }}"  
             --header 'Content-Type: application/json' 
             --data '{"personalizations": [{"to": [{"email": "${{env.MY_NAME}}"}]}],"from": {"email": "hamamaoutworld@gmail.com"},"subject": "Sending with SendGrid is Fun","content": [{"type": "text/plain", "value": "and easy to do anywhere, even with cURL"}]}'
       env:
