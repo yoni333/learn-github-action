@@ -41,7 +41,7 @@ jobs:
             }
             ],
             "from": {
-            "email": "'"$SENDER_EMAIL"'"
+                 "email": "'"$SENDER_EMAIL"'"
             },
             "content": [
             {
