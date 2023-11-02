@@ -18,7 +18,9 @@ jobs:
     steps:
     - name: check folder
       shell: bash
-      run: echo ${{ env }} ${{ secrets.HAMAMA_SENDGRID_API_KEY}} ${{ secrets.HAMAMA_SENDGRID_API_KEY.HAMAMA_SENDGRID_API_KEY}}
+      run: >
+             echo ${{ env.HAMAMA_SENDGRID_API_KEY }} ${{ secrets.HAMAMA_SENDGRID_API_KEY}} ${{ secrets.HAMAMA_SENDGRID_API_KEY.HAMAMA_SENDGRID_API_KEY}}
+         
       env:
         HAMAMA_SENDGRID_API_KEY: ${{ secrets.HAMAMA_SENDGRID_API_KEY}}
     - name: Send mail
