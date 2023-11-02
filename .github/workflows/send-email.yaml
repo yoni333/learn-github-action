@@ -23,8 +23,8 @@ jobs:
         SENDER: ${{env.SENDER_EMAIL}}
         RECIVER: ${{env.RECIVER_EMAIL}}
       run: |
-        echo $SENDER
-        echo $RECIVER
+        echo ${{env.SENDER_EMAIL}}
+        echo ${{env.RECIVER_EMAIL}}
         curl --request POST \
         --url https://api.sendgrid.com/v3/mail/send \
         --header "Authorization: Bearer $SENDGRID_API_KEY" \
@@ -34,14 +34,14 @@ jobs:
             {
                 "to": [
                 {
-                    "email": $RECIVER
+                    "email": ${{env.RECIVER_EMAIL}}
                 }
                 ],
                 "subject": " githhub action -  your job artifact  is ready"
             }
             ],
             "from": {
-            "email": $SENDER
+            "email": ${{env.SENDER_EMAIL}}
             },
             "content": [
             {
