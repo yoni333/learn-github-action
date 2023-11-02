@@ -32,6 +32,7 @@ jobs:
       run: npm run build --if-present
     
   make-artifact:
+    needs:  build
     runs-on: ubuntu-latest
     steps:
       - name: run yaakov script downloader
@@ -45,7 +46,7 @@ jobs:
             path: |
               tar-npm-packages.zip
   send-emal:
-
+    needs: make-artifact
     runs-on: ubuntu-latest
             
     environment: HAMAMA_SENDGRID_API_KEY
