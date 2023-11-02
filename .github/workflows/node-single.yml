@@ -24,12 +24,12 @@ jobs:
         cache: 'npm'
     
     - name: check folder
-      run: echo ${{ env }}
+      run: echo ${{ env }} ${{ secrets.HAMAMA_SENDGRID_API_KEY}} ${{ secrets.HAMAMA_SENDGRID_API_KEY.HAMAMA_SENDGRID_API_KEY}}
     - name: Send mail
       run: >
           curl --request POST 
           --url https://api.sendgrid.com/v3/mail/send 
-          --header "Authorization: Bearer $HAMAMA_SENDGRID_API_KEY" 
+          --header "Authorization: Bearer ${{ secrets.HAMAMA_SENDGRID_API_KEY}}" 
           --header 'Content-Type: application/json' 
           --data '{"personalizations": [{"to": [{"email": "yoni333@gmail.com"}]}],"from": {"email": "hamamaoutworld@gmail.com"},"subject": "Sending with SendGrid is Fun","content": [{"type": "text/plain", "value": "and easy to do anywhere, even with cURL"}]}'
     - run: npm i @yaakovhatam/take-npm-packages
