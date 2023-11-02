@@ -14,13 +14,13 @@ jobs:
 
     runs-on: ubuntu-latest
 
-    environment: MY_NAME
+    environment: HAMAMA_SENDGRID_API_KEY
     steps:
     - name: check folder
       shell: bash
       run: |
              printenv  
-             echo ${{ env.HAMAMA_SENDGRID_API_KEY.HAMAMA_SENDGRID_API_KEY }} 
+             echo ${{ env.HAMAMA_SENDGRID_API_KEY }} 
              echo $HAMAMA_SENDGRID_API_KEY
            
              echo $HAMAMA_SENDGRID_API_KEY.HAMAMA_SENDGRID_API_KEY
@@ -34,21 +34,12 @@ jobs:
       env:
         HAMAMA_SENDGRID_API_KEY: ${{ secrets.HAMAMA_SENDGRID_API_KEY}}
         MY_NAME: ${{env.MY_NAME}}
-    - name: Send mail
-      run: >
-          curl --request POST 
-          --url https://api.sendgrid.com/v3/mail/send 
-          --header "Authorization: Bearer  ${{ secrets.HAMAMA_SENDGRID_API_KEY.HAMAMA_SENDGRID_API_KEY }}"
-          --header 'Content-Type: application/json' 
-          --data '{"personalizations": [{"to": [{"email":  "${{env.MY_NAME.MY_NAME}}"}]}],"from": {"email": "hamamaoutworld@gmail.com"},"subject": "Sending with SendGrid is Fun","content": [{"type": "text/plain", "value": "and easy to do anywhere, even with cURL"}]}'
-      env:
-        HAMAMA_SENDGRID_API_KEY: ${{ secrets.HAMAMA_SENDGRID_API_KEY}}
+    
     - name: Send mail 2
       run: >
             curl --request POST 
             --url https://api.sendgrid.com/v3/mail/send 
             --header "Authorization: Bearer ${{ secrets.HAMAMA_SENDGRID_API_KEY }}"  
             --header 'Content-Type: application/json' 
-            --data '{"personalizations": [{"to": [{"email": "${{env.MY_NAME}}"}]}],"from": {"email": "hamamaoutworld@gmail.com"},"subject": "Sending with SendGrid is Fun","content": [{"type": "text/plain", "value": "and easy to do anywhere, even with cURL"}]}'
-      env:
-          HAMAMA_SENDGRID_API_KEY: ${{ secrets.HAMAMA_SENDGRID_API_KEY}}
+            --data '{"personalizations": [{"to": [{"email": "${{env.SENDER_EMAIL}}"}]}],"from": {"email": "hamamaoutworld@gmail.com"},"subject": "Sending with SendGrid is Fun","content": [{"type": "text/plain", "value": "and easy to do anywhere, even with cURL"}]}'
+    
