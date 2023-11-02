@@ -23,8 +23,8 @@ jobs:
         SENDER: ${{vars.SENDER_EMAIL}}
         RECIVER: ${{vars.RECIVER_EMAIL}}
       run: |
-        echo ${{env.SENDER_EMAIL}}
-        echo ${{env.RECIVER_EMAIL}}
+        echo  "$SENDER"
+        echo  $RECIVER
         curl --request POST \
         --url https://api.sendgrid.com/v3/mail/send \
         --header "Authorization: Bearer $SENDGRID_API_KEY" \
