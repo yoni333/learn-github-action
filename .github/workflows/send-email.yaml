@@ -19,21 +19,20 @@ jobs:
     - name: check folder
       shell: bash
       run: |
-             printenv  
-             echo ${{ env.HAMAMA_SENDGRID_API_KEY }} 
+             echo ${{ env.SENDER_EMAIL }} 
+             echo ${{ secrets.HAMAMA_SENDGRID_API_KEY}}
              echo $HAMAMA_SENDGRID_API_KEY
            
-             echo $HAMAMA_SENDGRID_API_KEY.HAMAMA_SENDGRID_API_KEY
-             echo $MY_NAME
+            
+             
              echo ${{ github.repository }}
-             echo ${{env.MY_NAME}}
-             echo ${{env.MY_NAME.MY_NAME}}
+           
            
 
          
       env:
         HAMAMA_SENDGRID_API_KEY: ${{ secrets.HAMAMA_SENDGRID_API_KEY}}
-        MY_NAME: ${{env.MY_NAME}}
+       
     
     - name: Send mail 2
       run: >
