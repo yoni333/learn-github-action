@@ -20,8 +20,8 @@ jobs:
       shell: bash
       env:
         SENDGRID_API_KEY: ${{ secrets.HAMAMA_SENDGRID_API_KEY }}
-        SENDER: ${{env.SENDER_EMAIL}}
-        RECIVER: ${{env.RECIVER_EMAIL}}
+        SENDER: ${{vars.SENDER_EMAIL}}
+        RECIVER: ${{vars.RECIVER_EMAIL}}
       run: |
         echo ${{env.SENDER_EMAIL}}
         echo ${{env.RECIVER_EMAIL}}
@@ -34,7 +34,7 @@ jobs:
             {
                 "to": [
                 {
-                    "email": ${{env.RECIVER_EMAIL}}
+                    "email": $RECIVER
                 }
                 ],
                 "subject": " githhub action -  your job artifact  is ready"
