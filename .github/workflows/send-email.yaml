@@ -19,6 +19,7 @@ jobs:
     - name: check folder
       shell: bash
       run: |
+             printenv  
              echo ${{ env.HAMAMA_SENDGRID_API_KEY.HAMAMA_SENDGRID_API_KEY }} 
              echo $HAMAMA_SENDGRID_API_KEY
            
