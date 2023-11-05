@@ -28,18 +28,18 @@ jobs:
         distribution: 'oracle'
         cache: maven
     - name: Build with Maven OFFLINE  
-      run: mvn dependency:go-offline
-    - name: Build Clean install to target folder  
-      run: mvn clean install
+      run: mvn clean install -DskipTests
+    - name: Copy dependencies to a folder
+      run: mvn dependency:copy-dependencies -DoutputDirectory=${{ github.workspace }}/dependencies
 
-    # Optional: Uploads the full dependency graph to GitHub to improve the quality of Dependabot alerts this repository can receive
-    # - name: Update dependency graph
-    #   uses: advanced-security/maven-dependency-submission-action@571e99aab1055c2e71a1e2309b9691de18d6b7d6
+    - name: Archive dependencies
+      run: zip -r dependencies.zip ${{ github.workspace }}/dependencies
 
-    - run: mvn --batch-mode --update-snapshots verify
-    - name: Create Artifact
-      run: mkdir staging && cp target/localm2/*.jar staging
-    - uses: actions/upload-artifact@v3
+    - name: Upload dependencies as artifact
+      uses: actions/upload-artifact@v2
       with:
-        name: Package
-        path: staging
+        name: maven-dependencies
+        path: dependencies.zip
+
+    - name: Clean up
+      run: rm -rf ${{ github.workspace }}/dependencies dependencies.zip
