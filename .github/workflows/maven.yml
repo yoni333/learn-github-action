@@ -27,8 +27,10 @@ jobs:
         java-version: '21'
         distribution: 'oracle'
         cache: maven
-    - name: Build with Maven
-      run: mvn -B package --file pom.xml
+    - name: Build with Maven OFFLINE  
+      run: mvn dependency:go-offline
+    - name: Build Clean install to target folder  
+      run: mvn clean install
 
     # Optional: Uploads the full dependency graph to GitHub to improve the quality of Dependabot alerts this repository can receive
     # - name: Update dependency graph
