@@ -6,6 +6,7 @@ import fs from "fs";
 // import xml2js Module 
 import { parseString } from "xml2js";  
  
+const projectFolder = process.argv[2]
 const newPom = fs.readFileSync(
     "./" + projectFolder+ "pom.xml",
 
