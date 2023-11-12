@@ -32,13 +32,13 @@ let oldPomJSON = {}
 parseString(newPomXML, function (err, results) {
     newPomJSON = results
     // display the json data 
-  //  console.log("results", JSON.stringify(newPomJSON));
+    //  console.log("results", JSON.stringify(newPomJSON));
 });
 
 parseString(oldPomXML, function (err, results) {
     oldPomJSON = results
     // display the json data 
-  //  console.log("results", JSON.stringify(oldPomJSON));
+    //  console.log("results", JSON.stringify(oldPomJSON));
 });
 
 
@@ -50,13 +50,13 @@ const compareDeps = (newPomJSON, oldPomJSON) => {
     const newDependencies = manipulateStructure(newPomJSON)
     const oldDependencies = manipulateStructure(oldPomJSON)
 
-    console.log(JSON.stringify( newDependencies));
-    console.log(JSON.stringify( oldDependencies));
+    console.log(JSON.stringify(newDependencies));
+    console.log(JSON.stringify(oldDependencies));
 
     for (const d of Object.keys(oldDependencies)) {
-        if (newDependencies[d] && oldDependencies[d] &&  newDependencies[d].version !== oldDependencies[d].version) {
+        if (newDependencies[d] && oldDependencies[d] && newDependencies[d].version !== oldDependencies[d].version) {
             result.push(`${projectFolder},${d},${newDependencies[d].groupId},${newDependencies[d].artifactId}, ${newDependencies[d].version}`)
-            
+
             console.log(`* Dependency ${d} differs:
                                 ${newDependencies[d].artifactId}: ${newDependencies[d].version}
                                 ${oldDependencies[d].artifactId}: ${oldDependencies[d].version}`);
@@ -68,24 +68,24 @@ const compareDeps = (newPomJSON, oldPomJSON) => {
 
 
 function manipulateStructure(pomJson) {
-  
+
     let dependencyObject = {};
-  //  log ('dependencyList',JSON.stringify(  pomJson.project.dependencies))
-    if (pomJson.project && pomJson.project.dependencies &&   pomJson.project.dependencies.length > 0 &&  pomJson.project.dependencies[0].dependency) {
+    //  log ('dependencyList',JSON.stringify(  pomJson.project.dependencies))
+    if (pomJson.project && pomJson.project.dependencies && pomJson.project.dependencies.length > 0 && pomJson.project.dependencies[0].dependency) {
         let dependencyList = pomJson.project.dependencies[0].dependency;
-    
+
         // Ensure that dependencyList is an array
         if (!Array.isArray(dependencyList)) {
             dependencyList = [dependencyList];
         }
-      //  log ('dependencyList',JSON.stringify(  dependencyList))
+        //  log ('dependencyList',JSON.stringify(  dependencyList))
         for (let dep of dependencyList) {
-         
-    
+
+
 
             // Use artifactId as the key
             let artifactIdKey = dep.artifactId;
-            if (!dep.version){continue}
+            if (!dep.version) { continue }
             // The value will be an object of the rest of the dependency details
             dependencyObject[artifactIdKey] = {
                 groupId: dep.groupId[0],
@@ -95,15 +95,13 @@ function manipulateStructure(pomJson) {
             };
         }
     }
-    JSON.stringify(dependencyObject)
+    JSON.stringify('dependencyObject', dependencyObject)
     return dependencyObject;
 }
 
-let poms = [oldPomJSON, newPomJSON] //  new pom always last!
 
 
-
-    compareDeps(newPomJSON, oldPomJSON);
+compareDeps(newPomJSON, oldPomJSON);
 
 
 console.log(result.toString());
