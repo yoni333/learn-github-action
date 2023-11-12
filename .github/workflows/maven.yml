@@ -2,9 +2,9 @@ name: MATRIX Java POM update and Artifact with Maven
 
 on:
   push:
-    branches: [ "main" ]
+    branches: [ "java-example" ]
   pull_request:
-    branches: [ "main" ]
+    branches: [ "java-example" ]
 
 jobs:
   folders-list:
