@@ -11,13 +11,13 @@ const  NEW_POM = "pom.xml"
 const OLD_POM = "pom_old.xml"
 
 const newPom = fs.readFileSync(
-    "./" + projectFolder+ "/" + NEW_POM,
+    "./" +  NEW_POM,
 
     (err) =>{ console.log(err ? 'Error :' + err : 'ok') }
 ).toString();
 
 const oldPom = fs.readFileSync(
-    "./" + projectFolder+ "/" + OLD_POM,
+    "./" +  OLD_POM,
 
     (err) =>{ console.log(err ? 'Error :' + err : 'ok') }
 ).toString();
@@ -47,3 +47,49 @@ let data = JSON.stringify(results)
 // display the json data 
 console.log("results",data); 
 });
+
+
+const result = [];
+const compareDeps = p => {
+    console.log(`Comparing ${p.name}`);
+    console.log();
+
+    const pDependencies = {
+        ...(p.dependencies || {}),
+        ...(p.devDependencies || {})
+    };
+
+    for (const p2 of packages) {
+        if (p2.dependencies) {
+            const p2Dependencies = {
+                ...p2.dependencies,
+                ...p2.devDependencies
+            };
+
+            for (const d of Object.keys(p2Dependencies)) {
+                if (pDependencies[d] && pDependencies[d] !== p2Dependencies[d]) {
+                    result.push(`${projectFolder},${d},${pDependencies[d]}`.replace("^", "").replace("~", ""))
+                    console.log(`* Dependency ${d} differs:
+                                ${p.name}: ${pDependencies[d]}
+                                ${p2.name}: ${p2Dependencies[d]}`);
+                }
+            }
+        }
+    }
+    console.log();
+    console.log();
+};
+
+while (packages.length > 0) {
+    console.log();
+    const p = packages.pop();
+
+    compareDeps(p);
+}
+
+console.log(result.toString());
+require("fs").writeFile(
+    "./" + projectFolder+ "_package-json-update.csv",
+    result.join('\n'),
+    (err) =>{ console.log(err ? 'Error :' + err : 'ok') }
+);
