@@ -1,0 +1,50 @@
+name: MATRIX Java POM update and Artifact with Maven 
+
+on:
+  push:
+    branches: [ "main" ]
+  pull_request:
+    branches: [ "main" ]
+
+jobs:
+  folders-list:
+    runs-on: ubuntu-latest
+    outputs:
+      matrix: ${{ steps.set-matrix.outputs.matrix }}
+    steps:
+    - uses: actions/checkout@v3
+    - id: set-matrix
+      run: |
+        echo "::set-output name=matrix::{"include":[{\"folder\":\"shuma_admin\"},{\"folder\":\"shuma_audit\"},{\"folder\":\"shuma_bleaching\"},{\"folder\":\"shuma_camunda\"},{\"folder\":\"shuma_cases\"},{\"folder\":\"shuma_config_server\"},{\"folder\":\"shuma_discovery\"},{\"folder\":\"shuma_documents\"},{\"folder\":\"shuma_employee_management\"},{\"folder\":\"shuma_entirex_api\"},{\"folder\":\"shuma_error_handling\"},{\"folder\":\"shuma_infra\"},{\"folder\":\"shuma_infra-parent\"},{\"folder\":\"shuma_infra-springboot-parent\"},{\"folder\":\"shuma_letters\"},{\"folder\":\"shuma_lm_common\"},{\"folder\":\"shuma_pdf_generator\"},{\"folder\":\"shuma_resource_bundle\"}]}"
+
+  build:
+    needs: folders-list
+    runs-on: ubuntu-latest
+    strategy:
+      matrix: ${{fromJson(needs.folders-list.outputs.matrix)}}
+    steps:
+    - uses: actions/checkout@v3
+      with:
+        fetch-depth: 2
+    - name: Check for changes in folder
+      id: check_changes
+      run: |
+          if [ -n "$(git diff --name-only ${{ github.sha }} ${{ github.sha }}~1 -- ${{ matrix.folder }})" ]; then
+            echo "CHANGES_DETECTED=true" >> $GITHUB_ENV
+          else
+            echo "CHANGES_DETECTED=false" >> $GITHUB_ENV
+          fi
+    - name: Set up JDK 17
+      if: env.CHANGES_DETECTED == 'true'
+      uses: actions/setup-java@v3
+      with:
+        java-version: '17'
+        distribution: 'oracle'
+        cache: maven
+    - name: Use Node.js ${{ matrix.node-version }}
+      uses: actions/setup-node@v3
+      with:
+          node-version: 18.10.0
+          cache: 'npm'
+      
+ 

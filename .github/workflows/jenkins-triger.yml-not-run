@@ -1,0 +1,18 @@
+name: Trigger Jenkins after Dependabot PR
+
+on:
+  pull_request:
+    branches: [main] # or whatever your default branch is
+    types: [opened, synchronize]
+
+jobs:
+  jenkins_trigger:
+    runs-on: ubuntu-latest
+    if: github.actor == 'dependabot[bot]' || github.actor == 'dependabot-preview[bot]'
+    steps:
+      - name: Trigger Jenkins build
+        run: |
+            curl -X GET "https://5f1455762710570016b37ea7.mockapi.io/users"
+        env:
+          TOKEN: ${{ secrets.JENKINS_TOKEN }}
+          
