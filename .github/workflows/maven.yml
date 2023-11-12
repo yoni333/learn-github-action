@@ -46,5 +46,15 @@ jobs:
       with:
           node-version: 18.10.0
           cache: 'npm'
+    - name: Get previous POM.XML
+#     if: env.CHANGES_DETECTED == 'true'
+      working-directory: ${{ github.workspace }}/${{ matrix.folder }}
+      run: |
+                git show  ${{ github.sha }}~1:${{ matrix.folder }}pom.xml > pom_old.xml
+                cat pom_old.xml
+    - name: Run find-package-json-different.js Script
+#      if: env.CHANGES_DETECTED == 'true'
+      working-directory: ${{ github.workspace }}/${{ matrix.folder }}
+      run: node ../xml-paresser.js ${{ matrix.folder }}
       
  
