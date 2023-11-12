@@ -56,9 +56,28 @@ jobs:
       #if: env.CHANGES_DETECTED == 'true'
       working-directory: ${{ github.workspace }}/${{ matrix.folder }}
       run: npm i 
-    - name: Run find-package-json-different.js Script
-#      if: env.CHANGES_DETECTED == 'true'
+    - name: Run find-pom-different.js Script
+#     if: env.CHANGES_DETECTED == 'true'
       working-directory: ${{ github.workspace }}/${{ matrix.folder }}
-      run: node ../xml-paresser.js ${{ matrix.folder }}
-      
+      run: node ../find-pom-different.js ${{ matrix.folder }}
+    - name: Delete Old Artifacts
+      continue-on-error: true
+      if: env.CHANGES_DETECTED == 'true'
+      uses: actions/github-script@v6
+      id: artifact
+      with:
+        script: |
+          const res = await github.rest.actions.listArtifactsForRepo({
+            owner: context.repo.owner,
+            repo: context.repo.repo,
+          })  
+          res.data.artifacts
+            .forEach(({ id }) => {
+              github.rest.actions.deleteArtifact({
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                artifact_id: id,
+              })
+            })
+    
  
