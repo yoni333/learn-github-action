@@ -50,8 +50,12 @@ jobs:
 #     if: env.CHANGES_DETECTED == 'true'
       working-directory: ${{ github.workspace }}/${{ matrix.folder }}
       run: |
-                git show  ${{ github.sha }}~1:${{ matrix.folder }}pom.xml > pom_old.xml
+                git show  ${{ github.sha }}~1:${{ matrix.folder }}/pom.xml > pom_old.xml
                 cat pom_old.xml
+    - name: Instal NPM DEPENDENCIES
+      #if: env.CHANGES_DETECTED == 'true'
+      working-directory: ${{ github.workspace }}/${{ matrix.folder }}
+      run: npm i 
     - name: Run find-package-json-different.js Script
 #      if: env.CHANGES_DETECTED == 'true'
       working-directory: ${{ github.workspace }}/${{ matrix.folder }}
