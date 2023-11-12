@@ -13,7 +13,7 @@ const newPom = fs.readFileSync(
 ).toString();
 
 const oldPom = fs.readFileSync(
-    "./" + projectFolder+ "pom_old.xml",
+    "./" + projectFolder+ "/pom_old.xml",
 
     (err) =>{ console.log(err ? 'Error :' + err : 'ok') }
 ).toString();
