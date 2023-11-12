@@ -7,14 +7,17 @@ import fs from "fs";
 import { parseString } from "xml2js";  
  
 const projectFolder = process.argv[2]
+const  NEW_POM = "pom.xml"
+const OLD_POM = "pom_old.xml"
+
 const newPom = fs.readFileSync(
-    "./" + projectFolder+ "pom.xml",
+    "./" + projectFolder+ "/" + NEW_POM,
 
     (err) =>{ console.log(err ? 'Error :' + err : 'ok') }
 ).toString();
 
 const oldPom = fs.readFileSync(
-    "./" + projectFolder+ "/pom_old.xml",
+    "./" + projectFolder+ "/" + OLD_POM,
 
     (err) =>{ console.log(err ? 'Error :' + err : 'ok') }
 ).toString();
