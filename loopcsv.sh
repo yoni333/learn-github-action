@@ -50,14 +50,14 @@ for folder in $FOLDERS; do
         else
             DESTINATION="%USERPROFILE%\Desktop"
         fi
-        
+
         # Try using 'move' first, then fallback to 'mv' if 'move' is not found
-        if command -v move >/dev/null 2>&1; then
+        if [ "$(expr substr $(uname -s) 1 5)" == "Linux" ]; then
             move "${folder}_package-json-update.tgz" "$DESTINATION/"
         else
             mv "${folder}_package-json-update.tgz" "$DESTINATION/"
         fi
-              
+
    
     else
         echo "Directory $folder not found!"
