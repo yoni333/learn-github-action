@@ -44,9 +44,20 @@ for folder in $FOLDERS; do
         tar -czvf "${folder}_package-json-update.tgz"  npm-packages/ package-json-update.csv
         echo "move the tgz file to root folder"
 
-        move ${folder}_package-json-update.tgz" %USERPROFILE%\Desktop\
-        mv ${folder}_package-json-update.tgz" %USERPROFILE%\Desktop\
-
+        # Set the destination based on the OS type
+        if [ "$(expr substr $(uname -s) 1 5)" == "Linux" ]; then
+            DESTINATION="$HOME/Desktop"
+        else
+            DESTINATION="%USERPROFILE%\Desktop"
+        fi
+        
+        # Try using 'move' first, then fallback to 'mv' if 'move' is not found
+        if command -v move >/dev/null 2>&1; then
+            move "${folder}_package-json-update.tgz" "$DESTINATION/"
+        else
+            mv "${folder}_package-json-update.tgz" "$DESTINATION/"
+        fi
+              
    
     else
         echo "Directory $folder not found!"
