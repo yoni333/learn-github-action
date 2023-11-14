@@ -1,7 +1,7 @@
 
 // import File System Module 
 import { log } from "console";
-import fs from "fs";
+import { writeFileSync ,readFileSync} from "fs";
 
 // import xml2js Module 
 import { parseString } from "xml2js";
@@ -10,13 +10,13 @@ const projectFolder = process.argv[2]
 const NEW_POM_FILE = "pom.xml"
 const OLD_POM_FILE = "pom_old.xml"
 
-const newPomXML = fs.readFileSync(
+const newPomXML = readFileSync(
     "./" + NEW_POM_FILE,
 
     (err) => { console.log(err ? 'Error :' + err : 'ok') }
 ).toString();
 
-const oldPomXML = fs.readFileSync(
+const oldPomXML = readFileSync(
     "./" + OLD_POM_FILE,
 
     (err) => { console.log(err ? 'Error :' + err : 'ok') }
@@ -105,7 +105,7 @@ compareDeps(newPomJSON, oldPomJSON);
 
 
 console.log(result.toString());
-fs.writeFile(
+const res = writeFileSync(
     "./" + projectFolder + "_pom-update.csv",
     result.join('\n'),
     (err) => { console.log(err ? 'Error :' + err : 'ok') }
