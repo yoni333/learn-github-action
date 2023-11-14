@@ -11,10 +11,11 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "angular": "^2.8.0",
-    "react": "^12.2.0"
+    "@angular/core": "^2.0.0",
+    "react": "^16.2.0"
   },
   "devDependencies": {
-    "@types/lodash": "^18.0.0"
+    "@types/lodash": "^4.0.0",
+    "@yaakovhatam/take-npm-packages": "^1.1.3"
   }
 }

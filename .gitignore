@@ -132,3 +132,5 @@ dist
 
 **/*.jar
 target/
+**/subdeps.txt
+**/*.zip

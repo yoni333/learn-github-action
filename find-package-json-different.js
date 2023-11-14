@@ -121,7 +121,7 @@ function main() {
 
     })
 
-    log(resultAll.map(r=>r))
+    // log(resultAll.map(r=>r))
 
     writeCSV(resultAll, "")
 

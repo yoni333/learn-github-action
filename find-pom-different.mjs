@@ -6,8 +6,14 @@ import { EOL } from "os";
 
 // import xml2js Module 
 import { parseString } from "xml2js";
+log()
+log("***  find-POM-different ****")
+log()
+const FOLDER_LIST = ["shuma_admin", "shuma_audit", "shuma_bleaching", "shuma_camunda", "shuma_cases", "shuma_config_server", "shuma_discovery", "shuma_documents", "shuma_employee_management", "shuma_entirex_api", "shuma_error_handling", "shuma_infra", "shuma_infra-parent", "shuma_infra-springboot-parent", "shuma_letters", "shuma_lm_common", "shuma_pdf_generator", "shuma_resource_bundle"];
+log("this script update only POM.XML projects folder :" + FOLDER_LIST)
+log("if you want to add more folder edit the FOLDER_LIST const inside the script")
+log()
 
-const projectFolderList = ["shuma_admin", "shuma_audit", "shuma_bleaching", "shuma_camunda", "shuma_cases", "shuma_config_server", "shuma_discovery", "shuma_documents", "shuma_employee_management", "shuma_entirex_api", "shuma_error_handling", "shuma_infra", "shuma_infra-parent", "shuma_infra-springboot-parent", "shuma_letters", "shuma_lm_common", "shuma_pdf_generator", "shuma_resource_bundle"];
 
 
 
@@ -128,4 +134,4 @@ function main(projectFolderList) {
 
 }
 
-main(projectFolderList);
+main(FOLDER_LIST);
