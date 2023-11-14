@@ -1,49 +1,56 @@
 
 // import File System Module 
 import { log } from "console";
-import { writeFileSync ,readFileSync} from "fs";
+import { writeFileSync, readFileSync, existsSync } from "fs";
 
 // import xml2js Module 
 import { parseString } from "xml2js";
 
-const projectFolder = process.argv[2]
-const NEW_POM_FILE = "pom.xml"
-const OLD_POM_FILE = "pom_old.xml"
-
-const newPomXML = readFileSync(
-    "./" + NEW_POM_FILE,
-
-    (err) => { console.log(err ? 'Error :' + err : 'ok') }
-).toString();
-
-const oldPomXML = readFileSync(
-    "./" + OLD_POM_FILE,
-
-    (err) => { console.log(err ? 'Error :' + err : 'ok') }
-).toString();
-//xml data 
-// log('new pom', newPomXML);
-// log('old pom', oldPomXML);
+const projectFolderList = ["shuma_admin", "shuma_audit", "shuma_bleaching", "shuma_camunda", "shuma_cases", "shuma_config_server", "shuma_discovery", "shuma_documents", "shuma_employee_management", "shuma_entirex_api", "shuma_error_handling", "shuma_infra", "shuma_infra-parent", "shuma_infra-springboot-parent", "shuma_letters", "shuma_lm_common", "shuma_pdf_generator", "shuma_resource_bundle"];
 
 
-let newPomJSON = {}
-let oldPomJSON = {}
-// parsing xml data 
-parseString(newPomXML, function (err, results) {
-    newPomJSON = results
-    // display the json data 
-    //  console.log("results", JSON.stringify(newPomJSON));
-});
 
-parseString(oldPomXML, function (err, results) {
-    oldPomJSON = results
-    // display the json data 
-    //  console.log("results", JSON.stringify(oldPomJSON));
-});
+function readAndParsePOM(projectFolder) {
 
+    const NEW_POM_FILE = "pom.xml"
+    const OLD_POM_FILE = "pom_old.xml"
+
+    const newPomXML = readFileSync(
+        "./" + projectFolder + "/" + NEW_POM_FILE,
+
+        (err) => { console.log(err ? 'Error :' + err : 'ok') }
+    ).toString();
+
+    const oldPomXML = readFileSync(
+        "./" + projectFolder + "/" + OLD_POM_FILE,
+
+        (err) => { console.log(err ? 'Error :' + err : 'ok') }
+    ).toString();
+    //xml data 
+    // log('new pom', newPomXML);
+    // log('old pom', oldPomXML);
+
+
+    let newPomJSON = {}
+    let oldPomJSON = {}
+    // parsing xml data 
+    parseString(newPomXML, function (err, results) {
+        newPomJSON = results
+        // display the json data 
+        //  console.log("results", JSON.stringify(newPomJSON));
+    });
+
+    parseString(oldPomXML, function (err, results) {
+        oldPomJSON = results
+        // display the json data 
+        //  console.log("results", JSON.stringify(oldPomJSON));
+    });
+
+    return { newPomJSON, oldPomJSON }
+}
 
 const result = [];
-const compareDeps = (newPomJSON, oldPomJSON) => {
+const compareDeps = (newPomJSON, oldPomJSON, projectFolder) => {
     console.log(`Comparing ${newPomJSON.project.name}`);
 
 
@@ -63,9 +70,6 @@ const compareDeps = (newPomJSON, oldPomJSON) => {
         }
     }
 }
-
-
-
 
 function manipulateStructure(pomJson) {
 
@@ -99,14 +103,28 @@ function manipulateStructure(pomJson) {
     return dependencyObject;
 }
 
+function createCSV(result) {
+    console.log(result.toString());
+    const res = writeFileSync(
+        "./" +  + "pom-update.csv",
+        result.join('n'),
+        (err) => { console.log(err ? 'Error :' + err : 'ok') }
+    );
+
+}
+
+function main(projectFolderList) {
+
+    projectFolderList.forEach(projectFolder => {
+        if (!existsSync("./"+projectFolder)){return}
+        const { newPomJSON, oldPomJSON } = readAndParsePOM(projectFolder)
+        compareDeps(newPomJSON, oldPomJSON, projectFolder);
+
+    });
 
 
-compareDeps(newPomJSON, oldPomJSON);
+    createCSV(result)
 
+}
 
-console.log(result.toString());
-const res = writeFileSync(
-    "./" + projectFolder + "_pom-update.csv",
-    result.join('\n'),
-    (err) => { console.log(err ? 'Error :' + err : 'ok') }
-);
+main(projectFolderList);
