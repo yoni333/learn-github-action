@@ -1,6 +1,6 @@
-import  { log }from "console";
-import  { execSync }from 'child_process';
-import { writeFileSync } from "fs";
+const { log } = require("console");
+const { execSync } = require('child_process');
+const  fs  = require("fs")
 log()
 log("***  find-package-json-different ****")
 log()
@@ -10,7 +10,7 @@ log("if you want to add more folder edit the FOLDER_LIST const inside the script
 log()
 
 
-const compareDeps = p => {
+const compareDeps = (p, packages, projectFolder) => {
     console.log(`Comparing ${p.name}`);
     console.log();
 
@@ -42,13 +42,13 @@ const compareDeps = p => {
 };
 
 
-function loopOverPackages(packages) {
+function loopOverPackages(packages, projectFolder) {
     log("start loop over package.json array")
     while (packages.length > 0) {
         console.log();
-        const p = packages.pop();
+        const currentPackage = packages.pop();
 
-        compareDeps(p);
+        compareDeps(currentPackage, packages, projectFolder);
     }
 }
 
@@ -94,22 +94,22 @@ function writeCSV(result) {
     log()
     log("write csv")
     console.log(result.toString());
-    writeFileSync(
-        "./" + projectFolder + "_package-json-update.csv",
+    fs.writeFileSync(
+        "./" +  "package-json-update.csv",
         result.join('\n'),
         (err) => { console.log(err ? 'Error :' + err : 'ok') }
     );
 }
 
 
+const result = [];
 
 function main() {
-    const result = [];
     FOLDER_LIST.forEach(folder => {
 
         if (checkGitDiffFolders(folder)) {
             const packages = packageFileRead(folder)
-            loopOverPackages(packages)
+            loopOverPackages(packages,folder)
         }
 
 

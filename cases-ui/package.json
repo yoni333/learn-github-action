@@ -1,8 +1,9 @@
 {
-  "name": "github-actions",
+  "name": "case-ui",
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
+  "type": "module",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
@@ -10,9 +11,10 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "xml2js": "^0.6.2"
+    "angular": "^2.2.0",
+    "react": "^12.2.0"
   },
   "devDependencies": {
-    "@types/node": "^18.0.0"
+    "@types/lodash": "^18.0.0"
   }
 }
