@@ -106,8 +106,8 @@ function manipulateStructure(pomJson) {
 function createCSV(result) {
     console.log(result.toString());
     const res = writeFileSync(
-        "./" +  + "pom-update.csv",
-        result.join('n'),
+        "./" +   "pom-update.csv",
+        result.join('\n'),
         (err) => { console.log(err ? 'Error :' + err : 'ok') }
     );
 

@@ -27,7 +27,7 @@
         </dependency>
         <dependency>
             <groupId>org.hibernate.orm</groupId>
-            <artifactId>hibernate-core</artifactId>
+            <artifactId>hibernate-core-bleach</artifactId>
             <version>2.2.2</version>
         </dependency>
     </dependencies>
