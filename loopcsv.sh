@@ -42,6 +42,8 @@ for folder in $FOLDERS; do
         # Zip the folder with its updated package.json and the npm-packages directory
         echo "Zipping the folder $folder"
         tar -czvf "${folder}_package-json-update.tgz"  npm-packages/ package-json-update.csv
+        echo "move the tgz file to root folder"
+
         move "${folder}_package-json-update.tgz" ../
 
    
