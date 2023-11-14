@@ -1,46 +1,83 @@
-# This workflow will build a Java project with Maven, and cache/restore any dependencies to improve the workflow execution time
-# For more information see: https://docs.github.com/en/actions/automating-builds-and-tests/building-and-testing-java-with-maven
-
-# This workflow uses actions that are not certified by GitHub.
-# They are provided by a third-party and are governed by
-# separate terms of service, privacy policy, and support
-# documentation.
-
-name: Java CI with Maven
+name: MATRIX Java POM update and Artifact with Maven 
 
 on:
   push:
-    branches: [ "main" ]
+    branches: [ "java-example" ]
   pull_request:
-    branches: [ "main" ]
- 
+    branches: [ "java-example" ]
 
 jobs:
-  build:
-
+  folders-list:
     runs-on: ubuntu-latest
-
+    outputs:
+      matrix: ${{ steps.set-matrix.outputs.matrix }}
     steps:
     - uses: actions/checkout@v3
-    - name: Set up JDK 21
+    - id: set-matrix
+      run: |
+        echo "::set-output name=matrix::{"include":[{\"folder\":\"shuma_admin\"},{\"folder\":\"shuma_bleaching\"}]}"
+
+  build:
+    needs: folders-list
+    runs-on: ubuntu-latest
+    strategy:
+      matrix: ${{fromJson(needs.folders-list.outputs.matrix)}}
+    steps:
+    - uses: actions/checkout@v3
+      with:
+        fetch-depth: 2
+    - name: Check for changes in folder
+      id: check_changes
+      run: |
+          if [ -n "$(git diff --name-only ${{ github.sha }} ${{ github.sha }}~1 -- ${{ matrix.folder }})" ]; then
+            echo "CHANGES_DETECTED=true" >> $GITHUB_ENV
+          else
+            echo "CHANGES_DETECTED=false" >> $GITHUB_ENV
+          fi
+    - name: Set up JDK 17
+      if: env.CHANGES_DETECTED == 'true'
       uses: actions/setup-java@v3
       with:
-        java-version: '21'
+        java-version: '17'
         distribution: 'oracle'
         cache: maven
-    - name: Build with Maven OFFLINE  
-      run: mvn clean install -DskipTests
-    - name: Copy dependencies to a folder
-      run: mvn dependency:copy-dependencies -DoutputDirectory=${{ github.workspace }}/dependencies
-
-    - name: Archive dependencies
-      run: zip -r dependencies.zip ${{ github.workspace }}/dependencies
-
-    - name: Upload dependencies as artifact
-      uses: actions/upload-artifact@v2
+    - name: Use Node.js ${{ matrix.node-version }}
+      uses: actions/setup-node@v3
       with:
-        name: maven-dependencies
-        path: dependencies.zip
-
-    - name: Clean up
-      run: rm -rf ${{ github.workspace }}/dependencies dependencies.zip
+          node-version: 18.10.0
+          cache: 'npm'
+    - name: Get previous POM.XML
+#     if: env.CHANGES_DETECTED == 'true'
+      working-directory: ${{ github.workspace }}/${{ matrix.folder }}
+      run: |
+                git show  ${{ github.sha }}~1:${{ matrix.folder }}/pom.xml > pom_old.xml
+                cat pom_old.xml
+    - name: Instal NPM DEPENDENCIES
+      #if: env.CHANGES_DETECTED == 'true'
+      working-directory: ${{ github.workspace }}/${{ matrix.folder }}
+      run: npm i 
+    - name: Run find-pom-different.js Script
+#     if: env.CHANGES_DETECTED == 'true'
+      working-directory: ${{ github.workspace }}/${{ matrix.folder }}
+      run: node ../find-pom-different.js ${{ matrix.folder }}
+    - name: Delete Old Artifacts
+      continue-on-error: true
+      if: env.CHANGES_DETECTED == 'true'
+      uses: actions/github-script@v6
+      id: artifact
+      with:
+        script: |
+          const res = await github.rest.actions.listArtifactsForRepo({
+            owner: context.repo.owner,
+            repo: context.repo.repo,
+          })  
+          res.data.artifacts
+            .forEach(({ id }) => {
+              github.rest.actions.deleteArtifact({
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                artifact_id: id,
+              })
+            })
+    
+ 
