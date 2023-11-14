@@ -44,7 +44,8 @@ for folder in $FOLDERS; do
         tar -czvf "${folder}_package-json-update.tgz"  npm-packages/ package-json-update.csv
         echo "move the tgz file to root folder"
 
-        move "${folder}_package-json-update.tgz" ../
+        move ${folder}_package-json-update.tgz" %USERPROFILE%\Desktop\
+        mv ${folder}_package-json-update.tgz" %USERPROFILE%\Desktop\
 
    
     else
