@@ -91,20 +91,21 @@ function packageFileRead(projectFolder) {
     return packages
 }
 
-function writeCSV(result) {
+function writeCSV(result, projectFolder) {
     if (result.length === 0) { log("there is no data to write to CSV"); return }
     log()
     log("write csv")
     console.log(result.map(r=>r));
     fs.writeFileSync(
-        "./" +  "package-json-update.csv",
+        "./" + projectFolder+"/"+ "package-json-update.csv",
         result.join(EOL),
         (err) => { console.log(err ? 'Error :' + err : 'ok') }
     );
 }
 
 
-const result = [];
+let result = [];
+const resultAll = [];
 
 function main() {
     FOLDER_LIST.forEach(folder => {
@@ -112,11 +113,18 @@ function main() {
         if (checkGitDiffFolders(folder)) {
             const packages = packageFileRead(folder)
             loopOverPackages(packages,folder)
+            writeCSV(result, folder)
+            resultAll.push(...result);
+            result= [];
         }
 
 
     })
-    writeCSV(result)
+
+    log(resultAll.map(r=>r))
+
+    writeCSV(resultAll, "")
+
 
 }
 
