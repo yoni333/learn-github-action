@@ -1,7 +1,8 @@
 
 // import File System Module 
 import { log } from "console";
-import { writeFileSync, readFileSync, existsSync } from "fs";
+import { writeFileSync, readFileSync, existsSync, } from "fs";
+import { EOL } from "os";
 
 // import xml2js Module 
 import { parseString } from "xml2js";
@@ -104,10 +105,10 @@ function manipulateStructure(pomJson) {
 }
 
 function createCSV(result) {
-    console.log(result.toString());
+    console.log(result.map(r=>r+ EOL));
     const res = writeFileSync(
         "./" +   "pom-update.csv",
-        result.join('\n'),
+        result.join(EOL),
         (err) => { console.log(err ? 'Error :' + err : 'ok') }
     );
 

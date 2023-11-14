@@ -1,5 +1,7 @@
 const { log } = require("console");
 const { execSync } = require('child_process');
+const {EOL} = require("os");
+
 const  fs  = require("fs")
 log()
 log("***  find-package-json-different ****")
@@ -64,7 +66,7 @@ function checkGitDiffFolders(folderPath) {
 
         // Check if the output is not empty (i.e., there are changes)
         if (output) {
-            console.log(`Changed folders:\n${output}`);
+            console.log(`Changed folders:${EOL}${output}`);
             return true; // There are changes in the folder
         } else {
             return false; // No changes in the folder
@@ -93,10 +95,10 @@ function writeCSV(result) {
     if (result.length === 0) { log("there is no data to write to CSV"); return }
     log()
     log("write csv")
-    console.log(result.toString());
+    console.log(result.map(r=>r));
     fs.writeFileSync(
         "./" +  "package-json-update.csv",
-        result.join('\n'),
+        result.join(EOL),
         (err) => { console.log(err ? 'Error :' + err : 'ok') }
     );
 }
