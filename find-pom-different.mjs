@@ -62,7 +62,7 @@ const compareDeps = (newPomJSON, oldPomJSON, projectFolder) => {
 
     for (const d of Object.keys(oldDependencies)) {
         if (newDependencies[d] && oldDependencies[d] && newDependencies[d].version !== oldDependencies[d].version) {
-            result.push(`${projectFolder},${d},${newDependencies[d].groupId},${newDependencies[d].artifactId}, ${newDependencies[d].version}`)
+            result.push(`${projectFolder},${newDependencies[d].groupId},${newDependencies[d].artifactId}, ${newDependencies[d].version}`)
 
             console.log(`* Dependency ${d} differs:
                                 ${newDependencies[d].artifactId}: ${newDependencies[d].version}

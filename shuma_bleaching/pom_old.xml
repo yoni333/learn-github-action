@@ -30,5 +30,10 @@
             <artifactId>hibernate-core-bleach</artifactId>
             <version>2.2.0</version>
         </dependency>
+        <dependency>
+            <groupId>org.yoni</groupId>
+            <artifactId>dd-yon</artifactId>
+            <version>3.2.2</version>
+        </dependency>
     </dependencies>
 </project>
