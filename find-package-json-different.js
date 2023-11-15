@@ -77,6 +77,28 @@ function checkGitDiffFolders(folderPath) {
     }
 }
 
+function createOldPackageJson(folderPath){
+    log("createOldPackageJson")
+    const commitSHA = "HEAD"; // equivalent of github.sha
+
+
+    const command = `git show  ${commitSHA}~1:${folderPath}/package.json > ./${folderPath}/package_old.json`;
+    try {
+        const output = execSync(command).toString();
+
+        // Check if the output is not empty (i.e., there are changes)
+        if (output) {
+            console.log(`Create old package${EOL}${output}`);
+            return true; // There are changes in the folder
+        } else {
+            return false; // No changes in the folder
+        }
+    } catch (error) {
+        console.error(`Error: ${error}`);
+        return false; // Return false in case of an error
+    }
+}
+
 
 function packageFileRead(projectFolder) {
     //var projectFolder = process.argv[2]
@@ -111,11 +133,12 @@ function main() {
     FOLDER_LIST.forEach(folder => {
 
         if (checkGitDiffFolders(folder)) {
+            createOldPackageJson(folder)
             const packages = packageFileRead(folder)
-            loopOverPackages(packages,folder)
-            writeCSV(result, folder)
-            resultAll.push(...result);
-            result= [];
+            //loopOverPackages(packages,folder)
+            //writeCSV(result, folder)
+            //resultAll.push(...result);
+            //result= [];
         }
 
 
@@ -123,7 +146,7 @@ function main() {
 
     // log(resultAll.map(r=>r))
 
-    writeCSV(resultAll, "")
+   // writeCSV(resultAll, "")
 
 
 }
