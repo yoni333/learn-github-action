@@ -11,7 +11,7 @@
     "author": "",
     "license": "ISC",
     "dependencies": {
-        "angular": "^1.0.0",
+        "angular": "^12.0.0",
         "react": "^15.2.0"
     },
     "devDependencies": {

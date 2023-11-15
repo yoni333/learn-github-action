@@ -43,20 +43,7 @@ for folder in $FOLDERS; do
         echo "Zipping the folder $folder"
         tar -czvf "${folder}_package-json-update.tgz"  npm-packages/ package-json-update.csv
         echo "move the tgz file to root folder"
-
-        # Set the destination based on the OS type
-        if [ "$(expr substr $(uname -s) 1 5)" == "Linux" ]; then
-            DESTINATION="$HOME/Desktop"
-        else
-            DESTINATION="%USERPROFILE%\Desktop"
-        fi
-
-        # Try using 'move' first, then fallback to 'mv' if 'move' is not found
-        if [ "$(expr substr $(uname -s) 1 5)" == "Linux" ]; then
             mv "${folder}_package-json-update.tgz" ..
-        else
-            move "${folder}_package-json-update.tgz" ../
-        fi
 
    
     else
