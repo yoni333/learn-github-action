@@ -45,9 +45,19 @@ for folder in $FOLDERS; do
         npx @yaakovhatam/take-npm-packages -d -i
         # Zip the folder with its updated package.json and the npm-packages directory
         echo "Zipping the folder $folder"
+        
+        # Define the folder name and store it in a variable
+        zip_folder="zip_for_halbana"
+
+        # Check if the folder exists; if not, create it
+        if [ ! -d "$zip_folder" ]; then
+            mkdir "$zip_folder"
+        fi
+        # zip the npm-packages folder
         tar -czvf "${folder}_package-json-update.tgz"  npm-packages/ package-json-update.csv
+        # Move files to the specified folder
         echo "move the tgz file to root folder"
-            mv "${folder}_package-json-update.tgz" ..
+        mv "${folder}_package-json-update.tgz" "../"$zip_folder/"
 
    
     else
