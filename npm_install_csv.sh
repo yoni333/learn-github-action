@@ -10,7 +10,11 @@ if [ ! -f "$CSV_FILE" ]; then
 fi
 
 # Extract the first column and save it into a variable
-FOLDERS=$(awk -F, '{if(NR>1)print $1}' "$CSV_FILE")
+# Use awk to extract unique values from the first column
+FOLDERS=$(awk -F, '!seen[$1]++ {print $1}' "$CSV_FILE")
+
+# Print the unique folder names
+echo "$FOLDERS"
 
 # Loop through each folder
 for folder in $FOLDERS; do
