@@ -53,9 +53,9 @@ for folder in $FOLDERS; do
 
         # Try using 'move' first, then fallback to 'mv' if 'move' is not found
         if [ "$(expr substr $(uname -s) 1 5)" == "Linux" ]; then
-            move "${folder}_package-json-update.tgz" "$DESTINATION/"
+            mv "${folder}_package-json-update.tgz" ..
         else
-            mv "${folder}_package-json-update.tgz" "$DESTINATION/"
+            move "${folder}_package-json-update.tgz" ../
         fi
 
    
