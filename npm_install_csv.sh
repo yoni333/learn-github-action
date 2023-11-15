@@ -51,7 +51,7 @@ for folder in $FOLDERS; do
 
         # Check if the folder exists; if not, create it
         if [ ! -d "$zip_folder" ]; then
-            mkdir "$zip_folder"
+            mkdir "../$zip_folder"
         fi
         # zip the npm-packages folder
         tar -czvf "${folder}_package-json-update.tgz"  npm-packages/ package-json-update.csv
