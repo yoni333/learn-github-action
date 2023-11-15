@@ -1,7 +1,9 @@
 
 // import File System Module 
 import { log } from "console";
-import { writeFileSync, readFileSync, existsSync, } from "fs";
+import { writeFileSync, readFileSync, existsSync } from "fs";
+import { execSync } from 'child_process';
+
 import { EOL } from "os";
 
 // import xml2js Module 
@@ -33,6 +35,27 @@ log("this script update only POM.XML projects folder :" + FOLDER_LIST)
 log("if you want to add more folder edit the FOLDER_LIST const inside the script")
 log()
 
+function createOldPomXML(folderPath){
+    log("createOldPomXML")
+    const commitSHA = "HEAD"; // equivalent of github.sha
+
+
+    const command = `git show  ${commitSHA}~1:${folderPath}/pom.xml > ./${folderPath}/pom_old.xml`;
+    try {
+        const output = execSync(command).toString();
+
+        // Check if the output is not empty (i.e., there are changes)
+        if (output) {
+            console.log(`Create old pom.xml${EOL}${output}`);
+            return true; // There are changes in the folder
+        } else {
+            return false; // No changes in the folder
+        }
+    } catch (error) {
+        console.error(`Error: ${error}`);
+        return false; // Return false in case of an error
+    }
+}
 
 
 
@@ -143,6 +166,7 @@ function main(projectFolderList) {
 
     projectFolderList.forEach(projectFolder => {
         if (!existsSync("./" + projectFolder)) { return }
+        createOldPomXML(projectFolder)
         const { newPomJSON, oldPomJSON } = readAndParsePOM(projectFolder)
         compareDeps(newPomJSON, oldPomJSON, projectFolder);
 

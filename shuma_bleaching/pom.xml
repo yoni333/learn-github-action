@@ -28,12 +28,12 @@
         <dependency>
             <groupId>org.hibernate.orm</groupId>
             <artifactId>hibernate-core-bleach</artifactId>
-            <version>2.2.2</version>
+            <version>2.2.3</version>
         </dependency>
         <dependency>
             <groupId>org.yoni</groupId>
             <artifactId>dd-yon</artifactId>
-            <version>6.2.2</version>
+            <version>6.2.4</version>
         </dependency>
     </dependencies>
 </project>

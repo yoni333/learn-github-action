@@ -135,18 +135,18 @@ function main() {
         if (checkGitDiffFolders(folder)) {
             createOldPackageJson(folder)
             const packages = packageFileRead(folder)
-            //loopOverPackages(packages,folder)
-            //writeCSV(result, folder)
-            //resultAll.push(...result);
-            //result= [];
+            loopOverPackages(packages,folder)
+            writeCSV(result, folder)
+            resultAll.push(...result);
+            result= [];
         }
 
 
     })
 
-    // log(resultAll.map(r=>r))
+   
 
-   // writeCSV(resultAll, "")
+   writeCSV(resultAll, "")
 
 
 }
