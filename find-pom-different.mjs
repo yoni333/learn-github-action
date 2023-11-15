@@ -35,6 +35,7 @@ log("this script update only POM.XML projects folder :" + FOLDER_LIST)
 log("if you want to add more folder edit the FOLDER_LIST const inside the script")
 log()
 
+
 function createOldPomXML(folderPath){
     log("createOldPomXML")
     const commitSHA = "HEAD"; // equivalent of github.sha
@@ -53,6 +54,9 @@ function createOldPomXML(folderPath){
         }
     } catch (error) {
         console.error(`Error: ${error}`);
+        console.log("copy pom.xml to old pom");
+        const command = `cat ./${folderPath}/pom.xml > ./${folderPath}/pom_old.xml`;
+        const output = execSync(command).toString();
         return false; // Return false in case of an error
     }
 }
