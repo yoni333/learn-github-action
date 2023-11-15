@@ -33,8 +33,8 @@ for folder in $FOLDERS; do
     # Check if directory change was successful
     if [ $? -eq 0 ]; then
         echo "Running meaven install in $folder"
-        # Run meaven install
-        mvn -B clean install -DskipTests -Dspring-boot.repackage.skip=true
+        # Run meaven install with fail never flag -fn
+        mvn -B clean install -DskipTests -Dspring-boot.repackage.skip=true -fn
         
          mvn dependency:copy-dependencies -DoutputDirectory="$WORKSPACE_PATH/$FOLDER_NAME/dependencies"
 
