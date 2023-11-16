@@ -56,13 +56,13 @@ for folder in $FOLDERS; do
             mkdir "../$zip_folder"
         fi
         # zip the pom_dependencies folder
-        tar -czvf "${folder}_pom_dependencies.tgz"  "$./$folder/pom_dependencies/" pom-update.csv
+        tar -czvf "${folder}_pom_dependencies.tgz"  "$./$folder/pom_dependencies/" ../pom-update.csv
         # Move files to the specified folder
         echo "move the tgz file to root folder"
         mv "${folder}_pom_dependencies.tgz" "../$zip_folder/"
 
          # zip the pom_dependencies_m2 folder
-        tar -czvf "${folder}_pom_dependencies_m2.tgz" ~/.m2 pom-update.csv
+        tar -czvf "${folder}_pom_dependencies_m2.tgz" ~/.m2 ../pom-update.csv
         # Move files to the specified folder
         echo "move the tgz file to root folder"
         mv "${folder}_pom_dependencies_m2.tgz" "../$zip_folder/"
