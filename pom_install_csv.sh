@@ -35,7 +35,7 @@ for folder in $FOLDERS; do
         echo "Running meaven install in $folder"
         # Run meaven install with fail never flag -fn
         mvn -B clean install -DskipTests -Dspring-boot.repackage.skip=true -fn
-        
+        mkdir pom_dependencies
          mvn dependency:copy-dependencies -DoutputDirectory="$WORKSPACE_PATH/$FOLDER_NAME/$folder/pom_dependencies"
 
         # Check if meaven install was successful
