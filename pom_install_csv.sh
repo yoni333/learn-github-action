@@ -36,7 +36,7 @@ for folder in $FOLDERS; do
         # Run meaven install with fail never flag -fn
         mvn -B clean install -DskipTests -Dspring-boot.repackage.skip=true -fn
         
-         mvn dependency:copy-dependencies -DoutputDirectory="$WORKSPACE_PATH/$FOLDER_NAME/dependencies"
+         mvn dependency:copy-dependencies -DoutputDirectory="$WORKSPACE_PATH/$FOLDER_NAME/$folder/pom_dependencies"
 
         # Check if meaven install was successful
         if [ $? -ne 0 ]; then
@@ -55,11 +55,17 @@ for folder in $FOLDERS; do
         if [ ! -d "$zip_folder" ]; then
             mkdir "../$zip_folder"
         fi
-        # zip the npm-packages folder
-        tar -czvf "${folder}_pom-update.tgz"  dependencies/ pom-update.csv
+        # zip the pom_dependencies folder
+        tar -czvf "${folder}_pom_dependencies.tgz"  "$WORKSPACE_PATH/$FOLDER_NAME/$folder/pom_dependencies/" pom_dependencies.csv
         # Move files to the specified folder
         echo "move the tgz file to root folder"
-        mv "${folder}_pom-update.tgz" "../$zip_folder/"
+        mv "${folder}_pom_dependencies.tgz" "../$zip_folder/"
+
+         # zip the pom_dependencies_m2 folder
+        tar -czvf "${folder}_pom_dependencies_m2.tgz" ~/.m2 pom_dependencies_m2.csv
+        # Move files to the specified folder
+        echo "move the tgz file to root folder"
+        mv "${folder}_pom_dependencies_m2.tgz" "../$zip_folder/"
 
    
     else
